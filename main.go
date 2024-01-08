@@ -1,6 +1,7 @@
 package main
 
 import (
+	ct "MyMoneyAPI/controllers"
 	db "MyMoneyAPI/database"
 	"net/http"
 
@@ -11,6 +12,8 @@ func main() {
 
 	db.DbConnect()
 	r := gin.Default()
+	r.POST("/client", ct.NewClient)
+	r.POST("/client/id", ct.CardBill)
 
 	r.Use(func(c *gin.Context) {
 		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
