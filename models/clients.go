@@ -15,18 +15,19 @@ type Client struct {
 
 type CreditCard struct {
 	gorm.Model
-	ClientID   uint    `json:"clientId"`
-	Client     Client  `gorm:"foreignKey:ClientID"`
-	CardName   string  `json:"cardName"`
-	Value      float64 `json:"value"`
-	Expiration float64 `json:"Expiration"`
+	ClientID        uint    `json:"clientId"`
+	Client          Client  `gorm:"foreignKey:ClientID"`
+	CardName        string  `json:"cardName"`
+	Value           float64 `json:"value"`
+	ExpirationDay   float64 `json:"ExpirationDay"`
+	ExpirationMonth float64 `json:"ExpirationMonth"`
 }
 
 type Payable struct {
 	gorm.Model
 	ClientID uint    `json:"clientId"`
 	Client   Client  `gorm:"foreignKey:ClientID"`
-	Ttile    string  `json:"tile"`
+	Title    string  `json:"tile"`
 	Value    float64 `json:"value"`
 	PayDay   float64 `json:"payday"`
 }

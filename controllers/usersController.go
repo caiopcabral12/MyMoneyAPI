@@ -26,14 +26,33 @@ func NewClient(c *gin.Context) {
 	c.JSON(http.StatusOK, client)
 }
 
-func CardBill(c *gin.Context) {
-	var card md.CreditCard
-	if err := c.ShouldBindJSON(&card); err != nil {
+func UpdateClient(c *gin.Context) {
+	var client md.Client
+	id := c.Params.ByName("id")
+	db.DB.First(&client, id)
+
+	if err := c.ShouldBindJSON(&client); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error()})
 		return
 	}
 
-	db.DB.Create(&card)
-	c.JSON(http.StatusOK, card)
+	if err := md.Validate(&client); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error()})
+		return
+	}
+
+	db.DB.Model(&client).UpdateColumns(client)
+	c.JSON(http.StatusOK, gin.H{
+		"Success": "Client updated!"})
+}
+
+func RemoveClient(c *gin.Context) {
+	var client md.Client
+	id := c.Params.ByName("id")
+
+	db.DB.Delete(&client, id)
+	c.JSON(http.StatusOK, gin.H{
+		"Success": "Client deleted!"})
 }
