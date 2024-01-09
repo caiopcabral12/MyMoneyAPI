@@ -10,7 +10,7 @@ import (
 func HandleRoutes() {
 	r := gin.Default()
 
-	r.POST("/", ct.Login)
+	r.POST("/login", ct.Login)
 
 	r.POST("/client", ct.NewClient)
 	r.PATCH("/client/:id", ct.UpdateClient)
